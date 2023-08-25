@@ -2,7 +2,8 @@
 
 testing out oauth2
 
-some references: 
+some references:
+
 - https://developer.auth0.com/resources/guides/api/express/basic-authorization
 - https://github.com/auth0/node-oauth2-jwt-bearer
 - https://auth0.github.io/node-oauth2-jwt-bearer/functions/auth.html
@@ -15,13 +16,16 @@ curl --request POST \
 ```
 
 unauth path
-```bash
 
+```bash
+curl --location 'http://localhost:3000/public'
 ```
 
 auth path
-```bash
 
+```bash
+curl --location 'http://localhost:3000/' \
+--header 'Authorization: Bearer ey...
 ```
 
 jwt.io header
@@ -45,7 +49,9 @@ jwt.io header
   "gty": "client-credentials"
 }
 ```
+
 issuer-base-url//.well-known/openid-configuration
+
 ```json
 {
   "issuer": "https://....auth0.com/",
@@ -57,64 +63,68 @@ issuer-base-url//.well-known/openid-configuration
   "jwks_uri": "https://....auth0.com/.well-known/jwks.json",
   "registration_endpoint": "https://....auth0.com/oidc/register",
   "revocation_endpoint": "https://....auth0.com/oauth/revoke",
-  "scopes_supported":
-    [
-      "openid",
-      "profile",
-      "offline_access",
-      "name",
-      "given_name",
-      "family_name",
-      "nickname",
-      "email",
-      "email_verified",
-      "picture",
-      "created_at",
-      "identities",
-      "phone",
-      "address",
-    ],
-  "response_types_supported":
-    [
-      "code",
-      "token",
-      "id_token",
-      "code token",
-      "code id_token",
-      "token id_token",
-      "code token id_token",
-    ],
+  "scopes_supported": [
+    "openid",
+    "profile",
+    "offline_access",
+    "name",
+    "given_name",
+    "family_name",
+    "nickname",
+    "email",
+    "email_verified",
+    "picture",
+    "created_at",
+    "identities",
+    "phone",
+    "address"
+  ],
+  "response_types_supported": [
+    "code",
+    "token",
+    "id_token",
+    "code token",
+    "code id_token",
+    "token id_token",
+    "code token id_token"
+  ],
   "code_challenge_methods_supported": ["S256", "plain"],
   "response_modes_supported": ["query", "fragment", "form_post"],
   "subject_types_supported": ["public"],
   "id_token_signing_alg_values_supported": ["HS256", "RS256", "PS256"],
-  "token_endpoint_auth_methods_supported":
-    ["client_secret_basic", "client_secret_post", "private_key_jwt"],
-  "claims_supported":
-    [
-      "aud",
-      "auth_time",
-      "created_at",
-      "email",
-      "email_verified",
-      "exp",
-      "family_name",
-      "given_name",
-      "iat",
-      "identities",
-      "iss",
-      "name",
-      "nickname",
-      "phone_number",
-      "picture",
-      "sub",
-    ],
+  "token_endpoint_auth_methods_supported": [
+    "client_secret_basic",
+    "client_secret_post",
+    "private_key_jwt"
+  ],
+  "claims_supported": [
+    "aud",
+    "auth_time",
+    "created_at",
+    "email",
+    "email_verified",
+    "exp",
+    "family_name",
+    "given_name",
+    "iat",
+    "identities",
+    "iss",
+    "name",
+    "nickname",
+    "phone_number",
+    "picture",
+    "sub"
+  ],
   "request_uri_parameter_supported": false,
   "request_parameter_supported": false,
-  "token_endpoint_auth_signing_alg_values_supported":
-    ["RS256", "RS384", "PS256"],
+  "token_endpoint_auth_signing_alg_values_supported": [
+    "RS256",
+    "RS384",
+    "PS256"
+  ]
 }
 ```
+
 issuer-base-url/.well-known/jwks.json
 
 ```json
