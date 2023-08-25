@@ -26,9 +26,6 @@ async function initDB() {
   const app = express();
   const port = 3000;
 
-  // enforce on all endpoints
-  // app.use(jwtCheck);
-
   app.get("/", jwtCheck, async (req, res) => {
     const collection = db.collection("documents");
     const documents = await collection.find().toArray();
