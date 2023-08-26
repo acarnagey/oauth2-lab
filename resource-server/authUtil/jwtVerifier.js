@@ -92,26 +92,27 @@ const jwtVerifier = ({
         issuer = issuer || discoveredIssuer;
         allowedSigningAlgs = idTokenSigningAlgValuesSupported;
       }
+      // ||= means if object is null then assign a value to it.
+      const defaultValidatorObj = defaultValidators(
+        issuer,
+        audience,
+        clockTolerance,
+        maxTokenAge,
+        strict,
+        allowedSigningAlgs,
+        tokenSigningAlg
+      )
       validators ||= {
-        ...defaultValidators(
-          issuer,
-          audience,
-          clockTolerance,
-          maxTokenAge,
-          strict,
-          allowedSigningAlgs,
-          tokenSigningAlg
-        ),
+        ...defaultValidatorObj,
         ...customValidators,
       };
-      const { payload, protectedHeader: header } = await jwtVerify(
-        jwt,
-        getKeyFnGetter(jwksUri)
-      );
+      const key = getKeyFnGetter(jwksUri);
+      const { payload, protectedHeader: header } = await jwtVerify(jwt, key);
       await validate(payload, header, validators);
       return { payload, header, token: jwt };
     } catch (e) {
-      throw new Error('Invalid Token Error ' + e.message);
+      throw e;
+      // throw new Error("Invalid Token Error " + e.message);
     }
   };
 };

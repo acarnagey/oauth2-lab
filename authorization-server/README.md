@@ -31,3 +31,7 @@ To generate rsa key
 ```bash
 ssh-keygen -t rsa -m PEM
 ```
+To generate rsa public key
+```bash
+openssl rsa -in id_rsa_pem_test  -pubout
+```

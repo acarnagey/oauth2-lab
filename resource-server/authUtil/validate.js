@@ -2,13 +2,17 @@ const validate = (payload, header, validators) =>
   Promise.all(
     Object.entries(validators).map(async ([key, validator]) => {
       const value = key === "alg" || key === "typ" ? header[key] : payload[key];
-      if (
-        validator === false ||
-        (typeof validator === "string" && value === validator) ||
-        (typeof validator === "function" &&
-          (await validator(value, payload, header)))
-      ) {
+      if (validator === false) {
         return;
+      }
+      if (typeof validator === "string" && value === validator) {
+        return;
+      }
+      if (typeof validator === "function") {
+        const isValid = await validator(value, payload, header);
+        if (isValid) {
+          return;
+        }
       }
       throw new Error(`Unexpected '${key}' value`);
     })

@@ -1,5 +1,4 @@
 const jwt = require("jsonwebtoken");
-const fs = require("fs");
 const { getDB } = require("./db");
 
 async function getClient(clientId, clientSecret) {
@@ -28,10 +27,10 @@ async function saveToken(token, client, user) {
     user,
     scope: token.scope,
   };
-  const privateKey = process.env.AUTH_SECRET;
+  const privateKey = process.env.PRIVATE_KEY;
   const accessJWT = jwt.sign(
     {
-      iss: "http://localhost:3001", // issuer, who created and signed this token
+      iss: "http://localhost:3001/", // issuer, who created and signed this token
       sub: client._id + "@clients", // subject, whom the token refers to
       aud: "http://localhost:3000",
       iat: Math.floor(new Date().getTime() / 1000),
